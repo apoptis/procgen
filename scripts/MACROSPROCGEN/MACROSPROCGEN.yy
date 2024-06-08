@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"MACROSPROCGEN",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"MACROSPROCGEN",
+  "parent":{
+    "name":"ProcGen",
+    "path":"folders/ProcGen.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

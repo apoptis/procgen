@@ -1,0 +1,1 @@
+/// @desc clean menu structs

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ProcGen",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ProcGen",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/ProcGen/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

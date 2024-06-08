@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"Binary",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Binary",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/ProcGen/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
