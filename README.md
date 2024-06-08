@@ -7,6 +7,8 @@
   Add your open source license, GitHub uses MIT license.
 -->
 
+![Perlin Noise Circle](circle-perlin.jpeg)
+
 # ProcGen
 
 _A Simple Procedural Generation Library for GameMakerStudio_
