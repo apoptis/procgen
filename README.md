@@ -7,9 +7,7 @@
   Add your open source license, GitHub uses MIT license.
 -->
 
-<picture>
-  ![Perlin Noise Circle](https://github.com/apoptis/procgen/blob/master/circle-perlin.jpg?raw=true)
-</picture>
+![Perlin Noise Circle](circle-perlin.jpeg)
 
 # ProcGen
 
