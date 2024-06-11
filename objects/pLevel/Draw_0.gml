@@ -1,6 +1,7 @@
 /// @desc draw level
 
-// OLD WAY (expensive)
+// OLD WAY
+//still useful for testing without a tileset
 /*
 var _cell_x = 0;
 repeat(width) {
@@ -13,3 +14,5 @@ repeat(width) {
 	}
 	_cell_x++;
 }*/
+
+// NEW WAY is output once to a Tile Map in procgen_draw_tilemap() in level create event

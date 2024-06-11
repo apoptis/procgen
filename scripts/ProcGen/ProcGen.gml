@@ -6,43 +6,30 @@
 // B : row
 // C : terrain type
 
+///===================================///
+//	TILE SCRIPTS
+///===================================///
+
 function procgen_set_cell(cell_x, cell_y, terrain_type) {
-
 	var _tile = (cell_x << 0) + (cell_y << 10) + (terrain_type << 20);
-
+	
 	return _tile;
 }
 
-function procgen_init_level(width, height, def_terrain) {
-	
-	var _grid = ds_grid_create(width, height);
-	
-	var _cell_x = 0;
-	repeat(width) {
-		var _cell_y = 0;
-		repeat(height) {
-			_grid[# _cell_x, _cell_y] = procgen_set_cell(_cell_x, _cell_y, def_terrain);
-			_cell_y++;
-		}
-		_cell_x++;
-	}
-	
-	
-	show_debug_message("level initialised. default terrain: " + string(def_terrain));
-	
-	return _grid;
-}
-
+// get a tile's terrain type
 function procgen_get_terrain(grid, cell_x, cell_y) {
 	
 	var _cell = grid[# cell_x, cell_y];
 	var _ter_mask = 0b111;
 	var _terrain = _cell ? (_cell >> 20) : 0 & _ter_mask;
 	
-	return _terrain + 1;
+	return _terrain;
 }
 
+//neighbor scripts
+
 function procgen_get_color(grid, cell_x, cell_y) {
+	//useful if not using terrain types
 	
 	var _cell = grid[# cell_x, cell_y];
 	var _ter_mask = 0b111;
@@ -82,6 +69,28 @@ function procgen_get_color(grid, cell_x, cell_y) {
 	return _color;
 }
 
+
+/// Level Generation
+
+function procgen_init_level(width, height, def_terrain) {
+	
+	var _grid = ds_grid_create(width, height);
+	
+	var _cell_x = 0;
+	repeat(width) {
+		var _cell_y = 0;
+		repeat(height) {
+			_grid[# _cell_x, _cell_y] = procgen_set_cell(_cell_x, _cell_y, def_terrain);
+			_cell_y++;
+		}
+		_cell_x++;
+	}
+	
+	
+	show_debug_message("level initialised. default terrain: " + string(def_terrain));
+	
+	return _grid;
+}
 ///===================================///
 //	PROCGEN DRAW FUNCTIONS
 ///===================================///
@@ -139,7 +148,6 @@ function procgen_make_path(start_x, start_y, end_x, end_y, noise_texture, grid) 
 
 function procgen_make_river(start_x, start_y, end_x, end_y, noise_texture, grid) {
 	
-	
 	show_debug_message("river created");
 }
 
@@ -162,7 +170,7 @@ function procgen_minimum_grids(grid1, grid2) {
 		for (var _row = 0; _row < ds_grid_height(grid1); _row++) {
 			var _terrain1 = procgen_get_terrain(grid1,_col,_row);
 			var _terrain2 = procgen_get_terrain(grid2,_col,_row);
-			var _result = min(_terrain1-1, _terrain2-1);
+			var _result = min(_terrain1, _terrain2);
 			//show_debug_message(string(_product));
 			_new_grid[# _col, _row] = procgen_set_cell(_col,_row, _result);
 		}
@@ -176,7 +184,7 @@ function procgen_maximum_grids(grid1, grid2) {
 		for (var _row = 0; _row < ds_grid_height(grid1); _row++) {
 			var _terrain1 = procgen_get_terrain(grid1,_col,_row);
 			var _terrain2 = procgen_get_terrain(grid2,_col,_row);
-			var _result = max(_terrain1-1, _terrain2-1);
+			var _result = max(_terrain1, _terrain2);
 			//show_debug_message(string(_product));
 			_new_grid[# _col, _row] = procgen_set_cell(_col,_row, _result);
 		}
@@ -200,7 +208,8 @@ function procgen_perlin_noise(width, height, lower_limit, upper_limit, inc, seed
 		for (var _row = 0; _row < height; _row += 1) {
 		
 			var _val = perlin_noise(_x, _y, seed);
-			var _col_val = map_value(_val, -1, 1, lower_limit, upper_limit+.4);// desired_upper = number of terrain types
+			var _col_val = map_value(_val, -1, 1, lower_limit-2, upper_limit+2);// desired_upper = number of terrain types
+			_col_val = clamp(_col_val, lower_limit, upper_limit);
 		
 			_grid[# _col, _row] = procgen_set_cell(_col, _row, _col_val);
 		
@@ -213,9 +222,11 @@ function procgen_perlin_noise(width, height, lower_limit, upper_limit, inc, seed
 	return _grid;
 }
 
-function perlin_noise(_x, _y = 6969.69, _z = 4.20) {
+function perlin_noise(_x, _y = 867.5309, _z = 13.75) {
 	#region //doubled perm table
 	static _p = [
+		
+	
 		151, 160, 137,  91,  90,  15, 131,  13, 201,  95,
 		 96,  53, 194, 233,   7, 225, 140,  36, 103,  30,
 		 69, 142,   8,  99,  37, 240,  21,  10,  23, 190,
@@ -343,7 +354,7 @@ function perlin_noise(_x, _y = 6969.69, _z = 4.20) {
 //	CELLULAR AUTOMATA FUNCTIONS
 ///===================================///
 
-function procgen_noise_edges(grid, amount) {
+function procgen_noise_edges(grid, amount, noise_past) {
 	var _grid_width = ds_grid_width(grid);
 	var _grid_height = ds_grid_height(grid);
 	repeat(amount) {
@@ -365,12 +376,12 @@ function procgen_noise_edges(grid, amount) {
 				_ter_sum /= 8;
 				
 				//apply rules for changing
-				if _ter_sum < 2 {
-					_tmp_grid[# _col, _row] = procgen_set_cell(_col, _row, _this_ter-1);
+				if _ter_sum < noise_past {
+					_tmp_grid[# _col, _row] = procgen_set_cell(_col, _row, _this_ter);
 				} else if _this_ter > _ter_sum {
-					_tmp_grid[# _col, _row] = procgen_set_cell(_col, _row, _this_ter-1 + irandom_range(-1,0));
+					_tmp_grid[# _col, _row] = procgen_set_cell(_col, _row, _this_ter + irandom_range(-1,0));
 				} else {
-					_tmp_grid[# _col, _row] = procgen_set_cell(_col, _row, _this_ter-1 + irandom(_ter_sum/5-1));
+					_tmp_grid[# _col, _row] = procgen_set_cell(_col, _row, _this_ter + irandom(_ter_sum/5-1));
 				}
 			}
 		}
