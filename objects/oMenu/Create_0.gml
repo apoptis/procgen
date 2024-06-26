@@ -36,8 +36,8 @@ instance_create_layer(_menu_x, _menu_y-2*_btn_y_dist, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		var _new_grid = procgen_perlin_noise(oMenu.levelObj.width, oMenu.levelObj.height,1,6,.03, random(1000)*.99);
-		oMenu.levelObj.levelGrid = procgen_minimum_grids(oMenu.levelObj.levelGrid,_new_grid);
+		var _levelArr = procgen_perlin_noise(oMenu.levelObj.width, oMenu.levelObj.height,1,6,.03, random(1000)*.99);
+		oMenu.levelObj.levelGrid = procgen_minimum_grids(oMenu.levelObj.levelGrid,_levelArr);
 		procgen_draw_tilemap(oMenu.levelObj.levelGrid,oMenu.levelObj.tileset);
 	}
 });
@@ -49,8 +49,8 @@ instance_create_layer(_menu_x, _menu_y-_btn_y_dist, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		var _new_grid = procgen_perlin_noise(oMenu.levelObj.width, oMenu.levelObj.height,1,6,.03, random(1000)*.99);
-		oMenu.levelObj.levelGrid = procgen_maximum_grids(oMenu.levelObj.levelGrid,_new_grid);
+		var _levelArr = procgen_perlin_noise(oMenu.levelObj.width, oMenu.levelObj.height,1,6,.03, random(1000)*.99);
+		oMenu.levelObj.levelGrid = procgen_maximum_grids(oMenu.levelObj.levelGrid,_levelArr);
 		procgen_draw_tilemap(oMenu.levelObj.levelGrid,oMenu.levelObj.tileset);
 	}
 });
@@ -84,7 +84,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 _menu_x += _btn_x_dist;
 
 //create autotile button
-/*
+
 instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	text : "Auto Tile",
 	image_xscale : _btn_xscale,
@@ -93,7 +93,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 		oMenu.levelObj.levelGrid = procgen_autotile();
 	}
 });
-*/
+
 
 //create clear button
 instance_create_layer(_menu_x, 10, layer, oButton, {

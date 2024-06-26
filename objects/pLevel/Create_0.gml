@@ -5,10 +5,10 @@ height = 360;
 
 text = "Empty Level"
 
-levelGrid = procgen_init_level(width,height,TERRAIN.DEEPWATER);
+levelArr = procgen_init_level(width,height,TERRAIN.DEEPWATER);
 
 tileset = layer_tilemap_get_id("TilesMain");
 
-procgen_draw_tilemap(levelGrid,tileset);
+procgen_draw_tilemap(levelArr,tileset);
 
 loadTime = 0;
