@@ -177,7 +177,7 @@ function procgen_minimum_array(level_array1, level_array2) {
 	return _new_level_array;
 }
 
-function procgen_maximum_grids(level_array1, level_array2) {
+function procgen_maximum_array(level_array1, level_array2) {
 	var _new_level_array;
 	for (var _col = 0; _col < array_length(level_array1); _col++) {
 		for (var _row = 0; _row < array_length(level_array1[0]); _row++) {
@@ -201,10 +201,10 @@ function procgen_perlin_noise(width, height, lower_limit, upper_limit, inc, seed
 	var _x = 0;
 	var _level_array;
 	
-	for (var _col = 0; _col < width; _col += 1) {
+	for (var _col = 0; _col < width; _col++) {
 	
 		var _y = _y_start;
-		for (var _row = 0; _row < height; _row += 1) {
+		for (var _row = 0; _row < height; _row++) {
 		
 			var _val = perlin_noise(_x, _y, seed);
 			var _col_val = map_value(_val, -1, 1, lower_limit-2, upper_limit+2);// desired_upper = number of terrain types
@@ -354,21 +354,22 @@ function perlin_noise(_x, _y = 867.5309, _z = 13.75) {
 ///===================================///
 
 function procgen_noise_edges(level_array, amount, noise_past) {
-	var _level_width = ds_grid_width(level_array);
-	var _level_height = ds_grid_height(level_array);
+	var _level_width = array_length(level_array);
+	var _level_height = array_length(level_array[0]);
 	repeat(amount) {
-		//create a temporary grid
+		//create a temporary array
 		var _tmp_array;
-		//2D loop through old grid
-		for (var _col = 0; _col < _level_width; _col += 1) {
-			for (var _row = 0; _row < _level_height; _row += 1) {
+		//2D loop through old level array
+		for (var _col = 0; _col < _level_width; _col++) {
+			for (var _row = 0; _row < _level_height; _row++) {
 				//sum neighbors terrain
-				var _col_dif, _row_dif;
+				//var _col_dif, _row_dif;
 				var _ter_sum = 0;
 				var _this_ter = procgen_get_terrain(level_array, _col, _row);
 				for (var _col_offset = -1; _col_offset < 2; _col_offset += 1) {//iterate thru neighbors
 					for (var _row_offset = -1; _row_offset < 2; _row_offset += 1) {
-						_ter_sum += procgen_get_terrain(level_array, _col+_col_offset, _row+_row_offset);
+						if (_col+_col_offset >= 0 && _col+_col_offset < array_length(level_array)) && (_row+_row_offset >= 0 && _row+_row_offset < array_length(level_array[0]))
+							_ter_sum += procgen_get_terrain(level_array, _col+_col_offset, _row+_row_offset);
 					}
 				}
 				_ter_sum -= _this_ter;
@@ -378,7 +379,7 @@ function procgen_noise_edges(level_array, amount, noise_past) {
 				if _ter_sum < noise_past {
 					_tmp_array[_col][_row] = procgen_set_cell(_col, _row, _this_ter);
 				} else if _this_ter > _ter_sum {
-					_tmp_array[_col][_row] = procgen_set_cell(_col, _row, _this_ter + irandom_range(-1,0));
+					_tmp_array[_col][_row] = procgen_set_cell(_col, _row, _this_ter + choose(-1,0));
 				} else {
 					_tmp_array[_col][_row] = procgen_set_cell(_col, _row, _this_ter + irandom(_ter_sum/5-1));
 				}
@@ -391,19 +392,52 @@ function procgen_noise_edges(level_array, amount, noise_past) {
 
 
 ///===================================///
-//	AUTOTILING (coming soon)
+//	AUTOTILING
 ///===================================///
-/*
-function procgen_autotile(grid, tileset) {
-	
+
+function procgen_autotile_map(level_array) {
+	for (var _col = 0; _col < array_length(level_array); _col++) {
+		for (var _row = 0; _row < array_length(level_array); _row++) {
+			level_array[_col][_row] = procgen_autotile(level_array,_col,_row);
+		}
+	}
 }
-*/
+
+function procgen_autotile(level_array, col, row) {
+	var _new_tiletype = 0;
+	var _tile_terrain = procgen_get_terrain(level_array,col,row);
+	//get neighbors terrain
+	var _n = procgen_get_terrain(level_array,col,row-1),
+		_ne = procgen_get_terrain(level_array,col+1,row-1),
+		_e = procgen_get_terrain(level_array,col+1,row),
+		_se = procgen_get_terrain(level_array,col+1,row+1),
+		_s = procgen_get_terrain(level_array,col,row+1),
+		_sw = procgen_get_terrain(level_array,col-1,row+1),
+		_w = procgen_get_terrain(level_array,col-1,row),
+		_nw = procgen_get_terrain(level_array,col-1,row-1);
+	
+	if _n == _tile_terrain _new_tiletype += 1;
+	if _ne= _tile_terrain _new_tiletype += 2;
+	if _e == _tile_terrain _new_tiletype += 4;
+	if _se == _tile_terrain _new_tiletype += 8;
+	if _s == _tile_terrain _new_tiletype += 16;
+	if _sw == _tile_terrain _new_tiletype += 32;
+	if _w == _tile_terrain _new_tiletype += 64;
+	if _nw == _tile_terrain _new_tiletype += 128;
+	
+	return _new_tiletype;
+}
+
+function procgen_choose_tiletype(tileset, tiletype) {
+	 
+}
+
 
 ///===================================///
 //	PROCGEN SAVE & LOAD FUNCTIONS (coming soon)
 ///===================================///
 /*
-function procgen_save_grid(grid) {
+function procgen_save_grid(level_array) {
 	
 }
 */

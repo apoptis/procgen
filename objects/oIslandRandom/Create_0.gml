@@ -18,7 +18,7 @@ levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-30,30), f
 levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-40,40), floor(height/2)+irandom_range(-40,40), 50, TERRAIN.FOREST);
 levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-40,40), floor(height/2)+irandom_range(-40,40), 40, TERRAIN.FOREST);
 repeat(10) {
-	levelGrid = procgen_make_circle(levelGrid, floor(width/2)+irandom_range(-60,60), floor(height/2)+irandom_range(-60,60), irandom_range(20,30), TERRAIN.FOREST);
+	levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-60,60), floor(height/2)+irandom_range(-60,60), irandom_range(20,30), TERRAIN.FOREST);
 }
 levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-40,40), floor(height/2)+irandom_range(-60,40), 40, TERRAIN.ROCK);
 levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-40,40), floor(height/2)+irandom_range(-60,40), 30, TERRAIN.ROCK);

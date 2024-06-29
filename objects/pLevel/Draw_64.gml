@@ -1,5 +1,6 @@
 /// @desc draw level info
 
+draw_set_halign(fa_center);
 
 //drop shadow
 draw_set_color(c_black);

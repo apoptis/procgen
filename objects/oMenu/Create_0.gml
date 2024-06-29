@@ -37,8 +37,8 @@ instance_create_layer(_menu_x, _menu_y-2*_btn_y_dist, layer, oButton, {
 	image_yscale : _btn_yscale,
 	onClick : function () {
 		var _levelArr = procgen_perlin_noise(oMenu.levelObj.width, oMenu.levelObj.height,1,6,.03, random(1000)*.99);
-		oMenu.levelObj.levelGrid = procgen_minimum_grids(oMenu.levelObj.levelGrid,_levelArr);
-		procgen_draw_tilemap(oMenu.levelObj.levelGrid,oMenu.levelObj.tileset);
+		oMenu.levelObj.levelArr = procgen_minimum_array(oMenu.levelObj.levelArr,_levelArr);
+		procgen_draw_tilemap(oMenu.levelObj.levelArr,oMenu.levelObj.tileset);
 	}
 });
 
@@ -50,8 +50,8 @@ instance_create_layer(_menu_x, _menu_y-_btn_y_dist, layer, oButton, {
 	image_yscale : _btn_yscale,
 	onClick : function () {
 		var _levelArr = procgen_perlin_noise(oMenu.levelObj.width, oMenu.levelObj.height,1,6,.03, random(1000)*.99);
-		oMenu.levelObj.levelGrid = procgen_maximum_grids(oMenu.levelObj.levelGrid,_levelArr);
-		procgen_draw_tilemap(oMenu.levelObj.levelGrid,oMenu.levelObj.tileset);
+		oMenu.levelObj.levelArr = procgen_maximum_array(oMenu.levelObj.levelArr,_levelArr);
+		procgen_draw_tilemap(oMenu.levelObj.levelArr,oMenu.levelObj.tileset);
 	}
 });
 
@@ -62,8 +62,8 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		oMenu.levelObj.levelGrid = procgen_noise_edges(oMenu.levelObj.levelGrid, 1, TERRAIN.WATER);
-		procgen_draw_tilemap(oMenu.levelObj.levelGrid,oMenu.levelObj.tileset);
+		oMenu.levelObj.levelArr = procgen_noise_edges(oMenu.levelObj.levelArr, 1, TERRAIN.WATER);
+		procgen_draw_tilemap(oMenu.levelObj.levelArr,oMenu.levelObj.tileset);
 	}
 });
 
@@ -76,7 +76,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		//oMenu.levelObj.levelGrid = 
+		//oMenu.levelObj.levelArray = 
 	}
 });
 */
@@ -90,7 +90,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		oMenu.levelObj.levelGrid = procgen_autotile();
+		oMenu.levelObj.levelArray = procgen_autotile();
 	}
 });
 
