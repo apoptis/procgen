@@ -1,7 +1,6 @@
 /// @desc draw mouse to GUI
 
 //cursor override
-window_set_cursor(cr_none);
 draw_sprite_ext(sprite_index,image_index,mx,my,size,size,0,c_white,1);
 
 if instance_exists(pLevel) && x >= 0 && y >= 0 && x < RESOLUTION_W*TILE_SIZE && y < RESOLUTION_H*TILE_SIZE {

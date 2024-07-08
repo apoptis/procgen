@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"MACROSPROCGEN",
   "isCompatibility":false,
   "isDnD":false,

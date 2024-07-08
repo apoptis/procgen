@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"ProcGen",
   "isCompatibility":false,
   "isDnD":false,

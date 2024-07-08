@@ -7,7 +7,8 @@ text = "Premade Circles Island";
 
 levelArray = procgen_init_level(width,height,TERRAIN.DEEPWATER);
 
-tileset = layer_tilemap_get_id("TilesMain");
+tilesMain = layer_tilemap_get_id("TilesMain");
+tilesTerrain = layer_tilemap_get_id("TilesTerrain");
 
 //levelArray = procgen_make_rectangle(levelArray, 20, 30, 600, 300, TERRAIN.SAND);
 //levelArray = procgen_make_rectangle(levelArray, 50, 50, 540, 200, TERRAIN.GRASS);
@@ -25,4 +26,4 @@ levelArray = procgen_make_circle(levelArray, floor(width/2)-40, floor(height/2)-
 levelArray = procgen_make_circle(levelArray, floor(width/2)+40, floor(height/2)-40, 30, TERRAIN.ROCK);
 levelArray = procgen_make_circle(levelArray, floor(width/2)+20, floor(height/2)+20, 20, TERRAIN.ROCK);
 
-procgen_draw_tilemap(levelArray,tileset);
+procgen_draw_tilemap(levelArr);

@@ -7,7 +7,8 @@ text = "Random Circles Island";
 
 levelArr = procgen_init_level(width,height,TERRAIN.DEEPWATER);
 
-tileset = layer_tilemap_get_id("TilesMain");
+tilesMain = layer_tilemap_get_id("TilesMain");
+tilesTerrain = layer_tilemap_get_id("TilesTerrain");
 
 //draw random circles
 levelArr = procgen_make_circle(levelArr, floor(width/2), floor(height/2), 160, TERRAIN.WATER);
@@ -27,4 +28,4 @@ repeat(10) {
 	levelArr = procgen_make_circle(levelArr, floor(width/2)+irandom_range(-60,60), floor(height/2)+irandom_range(-60,60), irandom_range(10,20), TERRAIN.ROCK);
 }
 
-procgen_draw_tilemap(levelArr,tileset);
+procgen_draw_tilemap(levelArr);
