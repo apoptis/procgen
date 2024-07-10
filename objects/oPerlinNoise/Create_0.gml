@@ -7,7 +7,7 @@ text = "Perlin Noise"
 
 levelArr = procgen_init_level(width,height,TERRAIN.DEEPWATER);
 
-tilesMain = layer_tilemap_get_id("TilesMain");
+//tilesMain = layer_tilemap_get_id("TilesMain");
 tilesTerrain = layer_tilemap_get_id("TilesTerrain");
 randomize();
 

@@ -453,6 +453,7 @@ function procgen_draw_tilemap(level_array, autotile = false, autotile_start = 0,
 	if autotile {
 		for (var _t = autotile_start; _t <= autotile_end; _t++) {
 			draw_tilemap(tilemap_array[_t],0,0);
+			show_debug_message("draw autotile map #: " + string(_t));
 		}
 	} else {
 		draw_tilemap(_map_id,0,0);
