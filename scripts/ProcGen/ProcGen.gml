@@ -387,15 +387,6 @@ function procgen_noise_edges(level_array, amount, noise_past) {
 //	AUTOTILING
 ///===================================///
 
-/*
-function procgen_autotile_map(level_array) {
-	for (var _col = 0; _col < array_length(level_array); _col++) {
-		for (var _row = 0; _row < array_length(level_array); _row++) {
-			level_array[_col][_row] = procgen_autotile(level_array,_col,_row);
-		}
-	}
-}*/
-
 function procgen_autotile(level_array, col, row) {
 	var _new_tiletype = 0;
 	var _tile_terrain = procgen_get_terrain(level_array,col,row);
@@ -421,10 +412,6 @@ function procgen_autotile(level_array, col, row) {
 	return _new_tiletype+10;
 }
 
-function procgen_choose_tiletype(tileset, tiletype) {
-	 
-}
-
 
 ///===================================///
 //	PROCGEN DRAW TILEMAP
@@ -440,8 +427,8 @@ function procgen_draw_tilemap(level_array, autotile = false, autotile_start = 0,
 				if _this_ter >= autotile_start && _this_ter <= autotile_end {
 					var _tiletype = procgen_autotile(level_array,_i,_j);
 					//set tile
-					tilemap_set(asset_get_index("ts"+string(_this_ter)), _tiletype, _i,_j);
-				} else {//autotiling but not this tile
+					tilemap_set(tilemap_array[_this_ter], _tiletype, _i,_j);
+				} else {//autotiling but not in autotile range
 					//set tile
 					tilemap_set(_map_id, _this_ter, _i,_j);
 				}

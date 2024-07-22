@@ -33,12 +33,13 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.0.157",
+    "IDEVersion":"2024.6.2.162",
   },
   "name":"bitwize",
   "resources":[
     {"id":{"name":"fntONE","path":"fonts/fntONE/fntONE.yy",},},
     {"id":{"name":"oButton","path":"objects/oButton/oButton.yy",},},
+    {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"oDebug","path":"objects/oDebug/oDebug.yy",},},
     {"id":{"name":"oGame","path":"objects/oGame/oGame.yy",},},
     {"id":{"name":"oIslandCircles","path":"objects/oIslandCircles/oIslandCircles.yy",},},
@@ -56,7 +57,7 @@
     {"id":{"name":"sSelector","path":"sprites/sSelector/sSelector.yy",},},
     {"id":{"name":"sTilesetGrass","path":"sprites/sTilesetGrass/sTilesetGrass.yy",},},
     {"id":{"name":"sTilesetTerrain","path":"sprites/sTilesetTerrain/sTilesetTerrain.yy",},},
-    {"id":{"name":"ts2","path":"tilesets/ts2/ts2.yy",},},
+    {"id":{"name":"ts4","path":"tilesets/ts4/ts4.yy",},},
     {"id":{"name":"tsTerrain","path":"tilesets/tsTerrain/tsTerrain.yy",},},
   ],
   "resourceType":"GMProject",

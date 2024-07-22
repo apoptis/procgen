@@ -19,7 +19,11 @@ for (var _t = 0; _t < terrain_types; _t++) {
 }*/
 var _terrain_depth = layer_get_depth("TilesTerrain");
 terrain_layer[TERRAIN.GRASS] = layer_create(_terrain_depth-1);
-terrain_tilemap[TERRAIN.GRASS] = layer_tilemap_create(terrain_layer[TERRAIN.GRASS],0,0,asset_get_index("ts"+string(TERRAIN.GRASS)),levelObj.width,levelObj.height);
+//var _tileset1 = asset_get_index("ts"+string(TERRAIN.GRASS));
+//show_debug_message("created tileset : " + string(_tileset1));
+
+var _tileset4 = ts4;
+terrain_tilemap[TERRAIN.GRASS] = layer_tilemap_create(terrain_layer[TERRAIN.GRASS],0,0,_tileset4,levelObj.width,levelObj.height);
 
 var _menu_y = 320;
 var _menu_x = 10;
@@ -107,7 +111,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		procgen_draw_tilemap(oGame.levelObj.levelArr, true, 2,2, oGame.terrain_tilemap);
+		procgen_draw_tilemap(oGame.levelObj.levelArr, true, 4,4, oGame.terrain_tilemap);
 	}
 });
 
