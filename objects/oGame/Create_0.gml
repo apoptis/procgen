@@ -3,28 +3,6 @@
 ///create blank level
 levelObj = instance_create_depth(0,0,depth+1,pLevel);
 
-///terrain types, resolution, tilesize set in MACROSPROCGEN
-/*
-//number of terrain types
-terrain_types = 9;//0-8
-terrain_layer = [];
-terrain_tilemap = [];
-//set tile layer for each terrain type
-var _this_depth = layer_get_depth("TilesTerrain");
-for (var _t = 0; _t < terrain_types; _t++) {
-	//create a layer for each terrain type
-	terrain_layer[_t] = layer_create(_this_depth-1*_t);
-	//create a new tilemap for each terrain type
-	terrain_tilemap[_t] = layer_tilemap_create(terrain_layer[_t],0,0,);
-}*/
-var _terrain_depth = layer_get_depth("TilesTerrain");
-terrain_layer[TERRAIN.GRASS] = layer_create(_terrain_depth-1);
-//var _tileset1 = asset_get_index("ts"+string(TERRAIN.GRASS));
-//show_debug_message("created tileset : " + string(_tileset1));
-
-var _tileset4 = ts4;
-terrain_tilemap[TERRAIN.GRASS] = layer_tilemap_create(terrain_layer[TERRAIN.GRASS],0,0,_tileset4,levelObj.width,levelObj.height);
-
 var _menu_y = 320;
 var _menu_x = 10;
 var _btn_x_dist = 156;
@@ -111,7 +89,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		procgen_draw_tilemap(oGame.levelObj.levelArr, true, 4,4, oGame.terrain_tilemap);
+		procgen_draw_tilemap(oGame.levelObj.levelArr, true, 3,5);
 	}
 });
 

@@ -1,7 +1,7 @@
 /// @desc camera step
 
 //camera follows mouse
-if instance_exists(follow) {
+if instance_exists(follow) && !cameraLock {
 	if abs(follow.x - x) > 100*zoom
 		xTo = follow.x;
 	if abs(follow.y - y) > 100*zoom
@@ -12,23 +12,31 @@ if instance_exists(follow) {
 if mouse_wheel_down() {
 	xTo = follow.x;
 	yTo = follow.y;
-	zoomTo += .2;
+	zoomTo += zoomInc*zoomSpd;
+	zoomSpd += 4;
 } else if mouse_wheel_up() {
 	xTo = follow.x;
 	yTo = follow.y;
-	zoomTo -= .2;
+	zoomTo -= zoomInc*zoomSpd;
+	zoomSpd += 4;
 } else if mouse_check_button(mb_middle) {
 	xTo = follow.x;
 	yTo = follow.y;
 	zoomTo = 4;
+} else if mouse_check_button(mb_left) {
+	cameraLock = true;
+} else if mouse_check_button(mb_right) {
+	cameraLock = false;
+} else {//zoom deceleration
+	if zoomSpd > 1 zoomSpd -= 1;
 }
 zoomTo = clamp(zoomTo,zoomMin,zoomMax);
 
 //update position
 x += (xTo - x) / 15;
 y += (yTo - y) / 15;
-zoom += (zoomTo - zoom) / 15;
-if zoomTo = zoomMax && zoom > zoomMax*.99 zoom = zoomMax;
+zoom += (zoomTo - zoom) / 10;
+if zoomTo == zoomMax && zoom > zoomMax*.99 zoom = zoomMax;
 
 //keep camera center inside room
 x = clamp(x, viewWidthHalf*zoom, room_width-viewWidthHalf*zoom);

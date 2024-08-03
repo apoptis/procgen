@@ -21,6 +21,6 @@ if instance_exists(pLevel) && x >= 0 && y >= 0 && x < RESOLUTION_W*TILE_SIZE && 
 	draw_text(mx-10,my-20, "x: " + string(_x));
 	draw_text(mx-10,my-8, "y: " + string(_y));
 	
-	if mouse_check_button(mb_left)
-		draw_text(mx-10,my-32, "autotile: " + string(procgen_autotile(pLevel.levelArr, _x, _y)));
+	if oCamera.cameraLock
+		draw_text(mx-10,my-32, "autotile: " + string(procgen_autotile(pLevel.levelArr, _x, _y)-10));
 }

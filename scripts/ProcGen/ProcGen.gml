@@ -387,7 +387,7 @@ function procgen_noise_edges(level_array, amount, noise_past) {
 //	AUTOTILING
 ///===================================///
 
-function procgen_autotile(level_array, col, row) {
+function procgen_autotile(level_array, col, row, vary = false) {
 	var _new_tiletype = 0;
 	var _tile_terrain = procgen_get_terrain(level_array,col,row);
 	//get neighbors terrain
@@ -400,14 +400,17 @@ function procgen_autotile(level_array, col, row) {
 		_w = procgen_get_terrain(level_array,col-1,row),
 		_nw = procgen_get_terrain(level_array,col-1,row-1);
 	
-	if _n == _tile_terrain _new_tiletype += 1;
-	if _ne= _tile_terrain _new_tiletype += 2;
-	if _e == _tile_terrain _new_tiletype += 4;
-	if _se == _tile_terrain _new_tiletype += 8;
-	if _s == _tile_terrain _new_tiletype += 16;
-	if _sw == _tile_terrain _new_tiletype += 32;
-	if _w == _tile_terrain _new_tiletype += 64;
-	if _nw == _tile_terrain _new_tiletype += 128;
+	if _n >= _tile_terrain _new_tiletype += 1;
+	if _ne >= _tile_terrain _new_tiletype += 2;
+	if _e >= _tile_terrain _new_tiletype += 4;
+	if _se >= _tile_terrain _new_tiletype += 8;
+	if _s >= _tile_terrain _new_tiletype += 16;
+	if _sw >= _tile_terrain _new_tiletype += 32;
+	if _w >= _tile_terrain _new_tiletype += 64;
+	if _nw >= _tile_terrain _new_tiletype += 128;
+	
+	//vary full tiles
+	if vary && _new_tiletype >= 255 _new_tiletype = 255 + irandom(14);
 	
 	return _new_tiletype+10;
 }
@@ -417,17 +420,34 @@ function procgen_autotile(level_array, col, row) {
 //	PROCGEN DRAW TILEMAP
 ///===================================///
 
-function procgen_draw_tilemap(level_array, autotile = false, autotile_start = 0, autotile_end = 9, tilemap_array = []) {
+function procgen_draw_tilemap(level_array, autotile = false, autotile_start = 0, autotile_end = 9) {
 	var _lay_id = layer_get_id("TilesTerrain");
 	var _map_id = layer_tilemap_get_id(_lay_id);
-	for (var _i = array_length(level_array)-1; _i >= 0; _i--) {//iterate thru width
-		for (var _j = array_length(level_array[0])-1; _j >= 0; _j--) {//iterate thru height
+	var _level_width = array_length(level_array);
+	var _level_height = array_length(level_array[0]);
+	var _tilemap_array = [];
+	var _terrain_depth = layer_get_depth("TilesTerrain");
+	
+	tilemap_clear(_map_id, 0);//clear terrain tilemap tilemap
+	
+	//initialize tilemap array for autotile layers
+	if autotile {
+		for (var _t = autotile_start; _t <= autotile_end; _t++) {
+			var _this_layer = layer_create(_terrain_depth-_t);
+			_tilemap_array[_t] = layer_tilemap_create(_this_layer,0,0,asset_get_index("ts" + string(_t)),_level_width,_level_height);
+		}
+	}
+	
+	for (var _i = array_length(level_array); _i >= 0; _i--) {//iterate thru width
+		for (var _j = array_length(level_array[0]); _j >= 0; _j--) {//iterate thru height
 			var _this_ter = procgen_get_terrain(level_array,_i,_j);
 			if autotile {
 				if _this_ter >= autotile_start && _this_ter <= autotile_end {
-					var _tiletype = procgen_autotile(level_array,_i,_j);
+					//set under tile (in case of water or abyss)
+					tilemap_set(_map_id, _this_ter-1, _i,_j);
+					var _tiletype = procgen_autotile(level_array,_i,_j,true);//set the tiledata to the autotile output
 					//set tile
-					tilemap_set(tilemap_array[_this_ter], _tiletype, _i,_j);
+					tilemap_set(_tilemap_array[_this_ter], _tiletype, _i,_j);
 				} else {//autotiling but not in autotile range
 					//set tile
 					tilemap_set(_map_id, _this_ter, _i,_j);
@@ -437,9 +457,10 @@ function procgen_draw_tilemap(level_array, autotile = false, autotile_start = 0,
 			}
 		}
 	}
+	
 	if autotile {
 		for (var _t = autotile_start; _t <= autotile_end; _t++) {
-			draw_tilemap(tilemap_array[_t],0,0);
+			draw_tilemap(_tilemap_array[_t],0,0);
 			show_debug_message("draw autotile map #: " + string(_t));
 		}
 	} else {

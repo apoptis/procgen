@@ -1,13 +1,13 @@
 {
   "$GMTileSet":"",
-  "%Name":"ts4",
+  "%Name":"ts3",
   "autoTileSets":[],
   "macroPageTiles":{
     "SerialiseHeight":0,
     "SerialiseWidth":0,
     "TileSerialiseData":[],
   },
-  "name":"ts4",
+  "name":"ts3",
   "out_columns":17,
   "out_tilehborder":2,
   "out_tilevborder":2,
@@ -18,8 +18,8 @@
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",
   "spriteId":{
-    "name":"sTilesetGrassSand",
-    "path":"sprites/sTilesetGrassSand/sTilesetGrassSand.yy",
+    "name":"sTilesetSand",
+    "path":"sprites/sTilesetSand/sTilesetSand.yy",
   },
   "spriteNoExport":false,
   "textureGroupId":{
