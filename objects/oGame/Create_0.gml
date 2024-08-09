@@ -89,7 +89,7 @@ instance_create_layer(_menu_x, _menu_y, layer, oButton, {
 	image_xscale : _btn_xscale,
 	image_yscale : _btn_yscale,
 	onClick : function () {
-		procgen_draw_tilemap(oGame.levelObj.levelArr, true, 3,5);
+		procgen_draw_tilemap(oGame.levelObj.levelArr, true, 3,6);
 	}
 });
 

@@ -216,8 +216,6 @@ function procgen_perlin_noise(width, height, lower_limit, upper_limit, inc, seed
 function perlin_noise(_x, _y = 867.5309, _z = 13.75) {
 	#region //doubled perm table
 	static _p = [
-		
-	
 		151, 160, 137,  91,  90,  15, 131,  13, 201,  95,
 		 96,  53, 194, 233,   7, 225, 140,  36, 103,  30,
 		 69, 142,   8,  99,  37, 240,  21,  10,  23, 190,

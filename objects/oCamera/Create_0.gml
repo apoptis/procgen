@@ -18,6 +18,7 @@ zoomMin = 0.2;
 zoomMax = 16;
 zoomInc = 0.1;
 zoomSpd = 1;//for zoom acceleration
+scrollSpd = 10;
 
 cameraLock = false;
 

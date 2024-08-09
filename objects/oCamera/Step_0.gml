@@ -8,6 +8,12 @@ if instance_exists(follow) && !cameraLock {
 		yTo = follow.y;
 } else if instance_exists(oMouse) follow = oMouse;
 
+//keyboard controls
+if keyboard_check(ord("W")) yTo-=scrollSpd*zoom;
+if keyboard_check(ord("A")) xTo-=scrollSpd*zoom;
+if keyboard_check(ord("S")) yTo+=scrollSpd*zoom;
+if keyboard_check(ord("D")) xTo+=scrollSpd*zoom;
+
 //zoom
 if mouse_wheel_down() {
 	xTo = follow.x;
